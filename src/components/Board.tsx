@@ -56,14 +56,15 @@ export default function Board() {
             return (
               <div
                 key={coord}
-                className={`w-16 h-16 mx-auto my-auto flex items-center justify-center bg-green-50 rounded-sm transition duration-300 ${
+                className={`w-16 h-16 mx-auto my-auto flex items-center justify-center rounded-sm transition duration-300 ${
                   availableFields.includes(coord) &&
-                  "bg-green-200 cursor-pointer"
-                } ${
-                  selectedField &&
-                  selectedField[0] === coord &&
-                  "border-2 border-purple-800 bg-purple-400 shadow-sm shadow-purple-800"
-                }`}
+                  (!selectedField ||
+                    (selectedField && selectedField[0] !== coord))
+                    ? " bg-green-300 cursor-pointer"
+                    : selectedField && selectedField[0] === coord
+                    ? " border-2 border-purple-800 bg-purple-400 shadow-sm shadow-purple-800"
+                    : " bg-green-50"
+                } `}
                 onClick={() => {
                   if (availableFields.includes(coord)) {
                     selectField(coord);
