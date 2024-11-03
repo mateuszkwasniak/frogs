@@ -84,6 +84,7 @@ export const useFrogStore = create<FrogStoreT>((set, get) => ({
       for (const step of steps) {
         const movedFrog = { ...frog, position: JSON.stringify(step) };
         const filteredPopulation = population.filter((it) => it.id !== frog.id);
+        const prev = get().board.get(movedFrog.position) as BoardValue;
 
         setTimeout(() => {
           set({ population: [...filteredPopulation, movedFrog] });
@@ -93,7 +94,7 @@ export const useFrogStore = create<FrogStoreT>((set, get) => ({
 
         if (movedFrog.position !== JSON.stringify(steps[steps.length - 1])) {
           setTimeout(() => {
-            get().setBoardValue(movedFrog.position, null);
+            get().setBoardValue(movedFrog.position, prev);
           }, 500 + 250 * i);
         }
         i++;
